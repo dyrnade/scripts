@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+main () {
+
+local LINK=$1
+
+local BEST_QUALITY=$(youtube-dl -F $LINK | grep best | cut -d " " -f1)
+
+youtube-dl -f $BEST_QUALITY $LINK
+ 
+}
+
+main "$@"

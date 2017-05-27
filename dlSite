@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#https://psung.blogspot.com.tr/2008/06/using-wget-or-curl-to-download-web.html
+
+main () {
+local link=$1
+wget -rkp -l3 -np -nH --cut-dirs=1 $link
+}
+
+main "$@"

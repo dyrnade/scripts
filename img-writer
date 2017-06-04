@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+main() {
+    file_name=$1
+    part=$2
+    read -n1 -p "Are you sure you want to go with /dev/sd$part ?????" answer
+    if [[ $answer = y ]] ; then
+       sudo umount /dev/sd$part1; sudo dd bs=4M if=$file_name of=/dev/sd$part; sudo sync; sudo eject /dev/sd$part
+       exit 1
+     else
+       echo "Failed!!!"
+       exit 0
+     fi
+}
+
+main "$@"

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# I dont want to use xdg-open and alternatives :P
+
+find-mime-type() {
+    file_name="$1"
+    mime_type="$(file -b --mime-type ${file_name})" # dont take file name and return mime-type
+}
+
+find-out-app() {
+    mime_cache_list="$(cat /usr/share/applications/mimeinfo.cache | grep $mime_type | sed 's/;//g;s/=/ /g;s/.desktop/ /g;s/org.gnome.//g')" # get mime_type line from list and clean ; = .desktop org.gnome
+    app="$(echo $mime_cache_list | cut -d ' ' -f2)" # get app name to open
+}
+
+main() {
+    find-mime-type "$1"
+    find-out-app
+    if [[ $app = libreoffice* ]]; then
+        libreoffice "$file_name" &
+    else
+        "$app" "$file_name" & # open the file with app
+    fi
+}
+
+main "$@"
